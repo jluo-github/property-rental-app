@@ -5,8 +5,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { auth } from "@/auth";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { AuthProvider } from "@/components/AuthProvider";
 import { FaHouseFloodWaterCircleArrowRight } from "react-icons/fa6";
 import "photoswipe/dist/photoswipe.css";
@@ -25,7 +26,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  console.log("server session", session);
+  // console.log("server session", session);
 
   return (
     <html lang='en'>
@@ -35,7 +36,7 @@ export default async function RootLayout({
           <main>{children}</main>
           <Footer />
           <ToastContainer
-            position='bottom-center'
+            position='bottom-right'
             limit={2}
             autoClose={1000}
             newestOnTop

@@ -53,3 +53,10 @@ npm install photoswipe react-photoswipe-gallery --save
 import 'photoswipe/dist/photoswipe.css'
 
 ```
+
+### react-share
+
+```
+npm i react-share
+
+```

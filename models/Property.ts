@@ -1,5 +1,4 @@
-import { Schema, model, models, type Types } from "mongoose";
-import type { IUser } from "./User";
+import { Schema, model, models } from "mongoose";
 
 export interface IProperty {
   _id: string;
@@ -11,7 +10,7 @@ export interface IProperty {
     street: string;
     city: string;
     state: string;
-    zipcode: string;
+    zip: string;
   };
   beds: number;
   baths: number;
@@ -66,7 +65,7 @@ const PropertySchema = new Schema<IProperty>(
         type: String,
       },
 
-      zipcode: {
+      zip: {
         type: String,
       },
     },

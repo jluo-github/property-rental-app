@@ -9,6 +9,7 @@ import profile from "@/assets/images/profile.png";
 import { toast } from "react-toastify";
 import type { IProperty } from "@/models/Property";
 import Spinner from "@/components/Spinner";
+import { useRouter } from "next/navigation";
 
 const ProfilePage = () => {
   const { data: session } = useSession();
@@ -19,8 +20,15 @@ const ProfilePage = () => {
   const [properties, setProperties] = useState<IProperty[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
+    if (!session) {
+      router.push("/");
+      return;
+    }
     const fetchUserProperties = async (userId: string) => {
+      setLoading(true);
       if (!userId) {
         return;
       }
@@ -43,6 +51,8 @@ const ProfilePage = () => {
   }, [session]);
 
   const handleDeleteProperty = async (propertyId: string) => {
+    // console.log("handleDeleteProperty propertyId: ", propertyId);
+
     const confirmed = window.confirm(
       "Are you sure you want to delete this property?"
     );
@@ -55,6 +65,7 @@ const ProfilePage = () => {
         method: "DELETE",
       });
       if (res.status === 200) {
+        // remove the deleted property from the properties array
         const updatedProperties = properties.filter(
           (property) => property._id !== propertyId
         );
@@ -62,10 +73,10 @@ const ProfilePage = () => {
         setProperties(updatedProperties);
         toast.success("Property deleted");
       } else {
-        toast.error("Error deleting property");
+        toast.error("error deleting property: ");
       }
     } catch (error) {
-      toast.error("Error deleting property");
+      toast.error((error as Error).message);
     }
   };
   return (
@@ -99,7 +110,7 @@ const ProfilePage = () => {
             {!loading && properties.length === 0 && (
               <p>You have no property listings.</p>
             )}
-            {/* listing: */}vb
+            {/* listing: */}
             {loading ? (
               <Spinner loading={loading} />
             ) : (

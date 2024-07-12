@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetchProperty } from "@/utils/requests";
 import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import Link from "next/link";
-// import PropertyDetails from "@/components/PropertyDetails";
 import { FaArrowLeft } from "react-icons/fa";
 import type { IProperty } from "@/models/Property";
 import PropertyDetails from "@/components/PropertyDetails";
 import PropertyImages from "@/components/PropertyImages";
-// import Spinner from "@/components/Spinner";
-// import PropertyImages from "@/components/PropertyImages";
-// import BookmarkButton from "@/components/BookmarkButton";
-// import ShareButtons from "@/components/ShareButtons";
-// import PropertyContactForm from "@/components/PropertyContactForm";
+import Spinner from "@/components/Spinner";
+
+import BookmarkButton from "@/components/BookmarkButton";
+import ShareButtons from "@/components/ShareButtons";
+import PropertyContactForm from "@/components/PropertyContactForm";
+import { useSession } from "next-auth/react";
 
 const PropertyPage = () => {
   const { id } = useParams();
@@ -39,7 +39,7 @@ const PropertyPage = () => {
     if (property === null) {
       fetchPropertyData();
     }
-  }, [id, property]);
+  }, [id, property, session]);
 
   if (!property && !loading) {
     return (
@@ -50,7 +50,7 @@ const PropertyPage = () => {
   }
   return (
     <>
-      {/* {loading && <Spinner loading={loading} />} */}
+      {loading && <Spinner loading={loading} />}
 
       {!loading && property && (
         <>
@@ -77,14 +77,14 @@ const PropertyPage = () => {
                 {/* property details */}
                 <PropertyDetails property={property} />
 
-                {/* <!-- Sidebar --> */}
+                {/*  Sidebar */}
                 <aside className='space-y-4'>
                   {/* bookmark button */}
-                  {/* <BookmarkButton property={property} /> */}
+                  <BookmarkButton property={property} />
                   {/* share button */}
-                  {/* <ShareButtons property={property} /> */}
-                  {/* <!-- Contact Form --> */}
-                  {/* <PropertyContactForm property={property} /> */}
+                  <ShareButtons property={property} />
+                  {/* Contact Form */}
+                  <PropertyContactForm property={property} />
                 </aside>
               </div>
             </div>

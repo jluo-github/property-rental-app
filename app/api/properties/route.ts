@@ -26,12 +26,11 @@ export const POST = async (request: NextRequest) => {
 
     //owner: get user id from session
     const session = await auth();
-    // console.log("session user:--> ", sessionUser);
+    console.log("session user:--> ", session);
 
     if (!session || !session.user?.id) {
       return new Response("Unauthorized", { status: 401 });
     }
-
     const { id: userId } = session.user;
     // console.log('userId: ', userId);
 
@@ -53,7 +52,7 @@ export const POST = async (request: NextRequest) => {
         street: formData.get("location.street"),
         city: formData.get("location.city"),
         state: formData.get("location.state"),
-        zipcode: formData.get("location.zipcode"),
+        zip: formData.get("location.zip"),
       },
       beds: formData.get("beds"),
       baths: formData.get("baths"),
@@ -70,7 +69,7 @@ export const POST = async (request: NextRequest) => {
         phone: formData.get("seller_info.phone"),
       },
       owner: userId,
-      images: [] as string[], 
+      images: [] as string[],
     };
 
     console.log("propertyData", propertyData);

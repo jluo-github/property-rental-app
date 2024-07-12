@@ -5,17 +5,24 @@ import logo from "@/assets/images/logo.png";
 import profile from "@/assets/images/profile.png";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import {useSession,  signIn, signOut } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useOutsideClick } from "./useOutsideClick";
+
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const { data: session } = useSession();
-  console.log("session:-->", session);
+  // console.log("session:-->", session);
 
   const pathname = usePathname();
+
+  // close the profile menu when clicked outside
+  const ref = useOutsideClick(() => {
+    setProfileMenuOpen(false);
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -178,6 +185,7 @@ const Navbar = () => {
                 {/* Profile dropdown  */}
                 {profileMenuOpen && (
                   <div
+                    ref={ref}
                     id='user-menu'
                     className=' absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-violet-900 ring-opacity-5 focus:outline-none'
                     role='menu'

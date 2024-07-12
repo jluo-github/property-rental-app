@@ -31,19 +31,7 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-// let User: IUser;
-
-// try {
-//   // Check if the model is already defined
-//   User = models.User as unknown as IUser;
-// } catch {
-//   // If not, define the model
-//   User = model<IUser>("User", UserSchema) as unknown as IUser;
-// }
 
 const User = models.User || model<IUser>("User", UserSchema);
 
 export default User;
-// const User = (): Model<IUser> => {
-//   return models.User || model<IUser>("User", UserSchema);
-// };

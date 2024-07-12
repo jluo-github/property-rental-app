@@ -1,7 +1,8 @@
 import connectDB from "@/config/database";
 import Property from "@/models/Property";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import cloudinary from "@/config/cloudinary";
+import { auth } from "@/auth";
 
 // GET /api/properties/user/:userId
 export const GET = async (
@@ -12,6 +13,7 @@ export const GET = async (
     await connectDB();
 
     const userId = params.userId;
+    // console.log("GET method userId: ", userId);
     if (!userId) {
       return NextResponse.json(
         { message: "User ID is required" },
@@ -26,7 +28,7 @@ export const GET = async (
     });
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong!" },
+      { message: (error as Error).message },
       { status: 500 }
     );
   }

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useState, type ChangeEvent } from "react";
 import type { IProperty } from "@/models/Property";
 import { MdTextFields } from "react-icons/md";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const PropertyAddForm = () => {
   const [fields, setFields] = useState<IProperty>({
@@ -16,7 +18,7 @@ const PropertyAddForm = () => {
       street: "",
       city: "",
       state: "",
-      zipcode: "",
+      zip: "",
     },
     beds: 0,
     baths: 0,
@@ -37,6 +39,13 @@ const PropertyAddForm = () => {
     createdAt: "",
     updatedAt: "",
   });
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  if (!session) {
+    router.push("/");
+    return;
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // limit user to 4 images
@@ -72,17 +81,20 @@ const PropertyAddForm = () => {
 
   const handleAmenities = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
+    // Clone the current array
     const updatedAmenities = [...fields.amenities];
 
     if (checked) {
+      // Add value to array
       updatedAmenities.push(value);
     } else {
+      // Remove value from array
       const index = updatedAmenities.indexOf(value);
       if (index !== -1) {
         updatedAmenities.splice(index, 1);
       }
     }
-
+    // Update state with updated array
     setFields((prevField) => ({
       ...prevField,
       amenities: updatedAmenities,
@@ -181,11 +193,11 @@ const PropertyAddForm = () => {
         />
         <input
           type='text'
-          id='zipcode'
-          name='location.zipcode'
+          id='zip'
+          name='location.zip'
           className='border rounded w-full py-2 px-3 mb-2'
-          placeholder='Zipcode'
-          value={fields.location.zipcode}
+          placeholder='zip'
+          value={fields.location.zip}
           onChange={handleChange}
         />
       </div>

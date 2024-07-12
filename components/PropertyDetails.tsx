@@ -19,7 +19,7 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
           <FaMapMarker className=' text-lg text-fuchsia-500 mr-2'></FaMapMarker>
           <p className='text-fuchsia-500'>
             {property.location.street}, {property.location.city},{" "}
-            {property.location.state}, {property.location.zipcode}
+            {property.location.state}, {property.location.zip}
           </p>
         </div>
 
