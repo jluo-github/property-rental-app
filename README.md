@@ -1,3 +1,18 @@
+Please visit [PurpleCat-next-rental](https://)
+
+## Skills and Tools Used
+
+- **React:** Used for building the frontend of the website.
+- **Next.js:** Used for server-side rendering and routing.
+- **MongoDB and Mongoose:** Used for database operations and data modeling.
+- **Next-auth:** Used for authentication and user management.
+- **Cloudinary:** Used for image and media storage.
+- **React-toastify:** Used for displaying toast notifications.
+- **React-icons:** Used for adding icons to the user interface.
+- **React-spinners:** Used for adding loading spinners.
+- **React-share:** Used for adding social media sharing buttons.
+- **React-photoswipe-gallery:** Used for displaying image galleries with zoom functionality.
+
 ### react-icons
 
 ```

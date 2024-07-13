@@ -7,7 +7,6 @@ import {
   FaRulerCombined,
   FaMoneyBill,
   FaMapMarker,
-  FaLocationDot,
   FaMap,
 } from "react-icons/fa";
 
