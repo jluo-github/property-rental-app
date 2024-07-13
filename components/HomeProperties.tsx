@@ -3,12 +3,11 @@ import { fetchProperties } from "@/utils/requests";
 import Link from "next/link";
 import type { IProperty } from "@/models/Property";
 
-
 const HomeProperties = async () => {
-  const properties: IProperty[] = await fetchProperties();
+  const { properties }: { properties: IProperty[] } = await fetchProperties();
 
   const recentProperties = properties
-    .sort(() => Math.random() - Math.random())
+    // .sort(() => Math.random() - Math.random())
     .slice(0, 3);
 
   return (

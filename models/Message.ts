@@ -1,11 +1,12 @@
 import { Schema, model, models } from "mongoose";
+import type { IProperty } from "./Property";
+import type { IUser } from "./User";
 
-
-interface IMessage {
+export interface IMessage {
   _id: string;
-  sender: Schema.Types.ObjectId;
-  recipient: Schema.Types.ObjectId;
-  property: Schema.Types.ObjectId;
+  sender: IUser;
+  recipient: IUser;
+  property: IProperty;
   name: string;
   email: string;
   phone?: string;

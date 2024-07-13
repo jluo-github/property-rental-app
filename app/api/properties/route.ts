@@ -1,18 +1,34 @@
 import { NextResponse, type NextRequest } from "next/server";
 import connectDB from "@/config/database";
-import Property from "@/models/Property";
+import Property, { type IProperty } from "@/models/Property";
 import cloudinary from "@/config/cloudinary";
 import { auth } from "@/auth";
 
 export const GET = async (request: NextRequest) => {
   try {
     await connectDB();
-    const properties = await Property.find({});
 
-    return NextResponse.json(properties, { status: 200 });
+    const page: number = Number(request.nextUrl.searchParams.get("page")) || 1;
+//  pagination
+    const pageSize: number =
+      Number(request.nextUrl.searchParams.get("pageSize")) || 6;
+
+    const skip: number = (page - 1) * pageSize;
+    const total: number = await Property.countDocuments({});
+
+    const properties: IProperty[] = await Property.find({})
+      .skip(skip)
+      .limit(pageSize);
+
+    const result = {
+      total,
+      properties,
+    };
+
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: (error as Error).message },
       { status: 500 }
     );
   }

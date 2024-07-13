@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import InfoBox from "./InfoBox";
 import { text } from "stream/consumers";
 import type { ReactNode } from "react";
+import { useSession } from "next-auth/react";
 
 const InfoBoxes = () => {
+  const { data: session } = useSession();
+
   return (
     <section>
       <div className='container-xl lg:container m-auto my-12'>
@@ -15,6 +20,7 @@ const InfoBoxes = () => {
             textColor='text-gray-800'
             buttonInfo={{
               link: "/properties",
+
               backgroundColor: "bg-violet-500",
               text: "Browse Properties",
             }}>
@@ -23,18 +29,35 @@ const InfoBoxes = () => {
           </InfoBox>
 
           {/* owners */}
-          <InfoBox
-            heading='For Property Owners'
-            backgroundColor='bg-gray-100'
-            textColor='text-gray-800'
-            buttonInfo={{
-              link: "/properties/add",
-              backgroundColor: "bg-violet-500",
-              text: "Add Property",
-            }}>
-            Showcase your properties and connect with prospective tenants for
-            both short and long-term rentals.
-          </InfoBox>
+          {session ? (
+            <InfoBox
+              heading='For Property Owners'
+              backgroundColor='bg-gray-100'
+              textColor='text-gray-800'
+              buttonInfo={{
+                link: "/properties/add",
+                backgroundColor: "bg-violet-500",
+                text: "Add Property",
+              }}>
+              Showcase your properties and connect with prospective tenants for
+              both short and long-term rentals.
+            </InfoBox>
+          ) : (
+            <>
+              <InfoBox
+                heading='For Property Owners'
+                backgroundColor='bg-gray-100'
+                textColor='text-gray-800'
+                buttonInfo={{
+                  link: "/api/auth/signin",
+                  backgroundColor: "bg-violet-500",
+                  text: "Add Property",
+                }}>
+                Showcase your properties and connect with prospective tenants
+                for both short and long-term rentals.
+              </InfoBox>
+            </>
+          )}
         </div>
       </div>
     </section>

@@ -1,13 +1,19 @@
 // NEXT_PUBLIC_API_DOMAIN=http://localhost:3000/api
 
 const url = process.env.NEXT_PUBLIC_API_DOMAIN || null;
-export async function fetchProperties() {
+
+export async function fetchProperties({ isFeatured = false } = {}) {
   try {
     if (!url) return [];
-    const res = await fetch(`${url}/properties`, { cache: "no-store" });
+    const res = await fetch(
+      `${url}/properties${isFeatured ? "/featured" : ""} `,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!res.ok) throw new Error("Failed to fetch properties");
-    
+
     const data = await res.json();
     return data;
   } catch (error) {

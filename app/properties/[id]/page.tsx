@@ -39,7 +39,7 @@ const PropertyPage = () => {
     if (property === null) {
       fetchPropertyData();
     }
-  }, [id, property, session]);
+  }, [id, property]);
 
   if (!property && !loading) {
     return (

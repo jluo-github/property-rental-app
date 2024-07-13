@@ -9,8 +9,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { AuthProvider } from "@/components/AuthProvider";
-import { FaHouseFloodWaterCircleArrowRight } from "react-icons/fa6";
 import "photoswipe/dist/photoswipe.css";
+import { GlobalProvider } from "@/context/GlobalContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,20 +29,22 @@ export default async function RootLayout({
   // console.log("server session", session);
 
   return (
-    <html lang='en'>
-      <body className='flex flex-col min-h-screen bg-violet-100'>
-        <AuthProvider session={session}>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <ToastContainer
-            position='bottom-right'
-            limit={2}
-            autoClose={1000}
-            newestOnTop
-          />
-        </AuthProvider>
-      </body>
-    </html>
+    <GlobalProvider>
+      <html lang='en'>
+        <body className='flex flex-col min-h-screen bg-violet-100'>
+          <AuthProvider session={session}>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer
+              position='bottom-right'
+              limit={2}
+              autoClose={1000}
+              newestOnTop
+            />
+          </AuthProvider>
+        </body>
+      </html>
+    </GlobalProvider>
   );
 }

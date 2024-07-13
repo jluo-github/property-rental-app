@@ -1,11 +1,12 @@
 import { Schema, model, models, Document } from "mongoose";
+import type { IProperty } from "./Property";
 
 export interface IUser extends Document {
   _id: string;
   email: string;
   username: string;
   image?: string;
-  bookmarks?: Schema.Types.ObjectId[];
+  bookmarks?: IProperty[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,7 +31,6 @@ const UserSchema = new Schema<IUser>(
   },
   { timestamps: true }
 );
-
 
 const User = models.User || model<IUser>("User", UserSchema);
 

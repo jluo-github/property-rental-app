@@ -63,7 +63,6 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
           </div>
         </div>
       </div>
-
       {/* description: */}
       <div className='bg-violet-50 p-6 rounded-lg shadow-2xl mt-6'>
         <h3 className='text-lg font-bold mb-6'>Description & Details</h3>
@@ -84,7 +83,6 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
         </div>
         <p className='text-gray-500 mb-4 text-center'>{property.description}</p>
       </div>
-
       {/* amenities: */}
       <div className='bg-violet-50  p-6 rounded-lg shadow-2xl mt-6'>
         <h3 className='text-lg font-bold mb-6'>Amenities</h3>
@@ -98,7 +96,7 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
         </ul>
       </div>
 
-      {/* todo */}
+      {/* //todo: add map */}
       {/* map: */}
       <div className='bg-violet-50  p-6 rounded-lg shadow-2xl mt-6'>
         <div id='map'></div>

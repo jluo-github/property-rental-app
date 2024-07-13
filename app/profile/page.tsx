@@ -18,7 +18,7 @@ const ProfilePage = () => {
   const profileEmail = session?.user?.email;
 
   const [properties, setProperties] = useState<IProperty[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -34,12 +34,14 @@ const ProfilePage = () => {
       }
       try {
         const res = await fetch(`/api/properties/user/${userId}`);
-        if (res.status === 200) {
-          const data = await res.json();
-          setProperties(data);
+        if (!res.ok) {
+          toast.error("Failed to fetch properties.");
+          return;
         }
+        const data = await res.json();
+        setProperties(data);
       } catch (error) {
-        console.error("Error fetching user properties", error);
+        console.error((error as Error).message);
       } finally {
         setLoading(false);
       }

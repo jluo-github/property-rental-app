@@ -13,9 +13,10 @@ export const GET = async () => {
     // check session User:
     const session = await auth();
     if (!session || !session.user) {
-      return new Response("User ID is required", {
-        status: 401,
-      });
+      return NextResponse.json(
+        { message: "User ID is required" },
+        { status: 401 }
+      );
     }
     const { id: userId } = session.user;
     // console.log('id', userId);
@@ -38,7 +39,7 @@ export const GET = async () => {
     return Response.json(messages);
   } catch (error) {
     console.log(error);
-    return new Response((error as Error).message, { status: 500 });
+    return NextResponse.json((error as Error).message, { status: 500 });
   }
 };
 
@@ -52,9 +53,12 @@ export const POST = async (request: NextRequest) => {
     // check session User:
     const session = await auth();
     if (!session || !session.user) {
-      return new Response("User ID is required", {
-        status: 401,
-      });
+      return NextResponse.json(
+        { message: "User ID is required" },
+        {
+          status: 401,
+        }
+      );
     }
     const { id: userId } = session.user;
 

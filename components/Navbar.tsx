@@ -5,10 +5,10 @@ import logo from "@/assets/images/logo.png";
 import profile from "@/assets/images/profile.png";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useOutsideClick } from "./useOutsideClick";
-
+import UnreadMessageCount from "./UnreadMessage";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -145,10 +145,13 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>
-                  {/*todo Replace with the actual number of notifications  */}2
-                </span>
-                {/* <UnreadMessageCount session={session} /> */}
+                {/* Replace with the actual number of notifications  */}
+                {/* <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-fuchsia-500 rounded-full'>
+                  10
+                </span> */}
+
+                {/* unread count  */}
+                <UnreadMessageCount session={session} />
               </Link>
 
               {/* profile */}
