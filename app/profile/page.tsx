@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
-
+  
   useEffect(() => {
     if (!session) {
       router.push("/");
