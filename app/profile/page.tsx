@@ -8,6 +8,7 @@ import { getAuthUser } from "../actions/addProperty";
 import Property from "@/models/Property";
 import ProfileProperties from "@/components/ProfileProperties";
 import { convertToObject } from "@/utils/convertJson";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,7 @@ const ProfilePage = async () => {
   const sessionUser = await getAuthUser();
   const userId = sessionUser?.id;
   if (!userId) {
-    return;
+    redirect("/");
   }
 
   const propertiesDoc: IProperty[] = await Property.find({

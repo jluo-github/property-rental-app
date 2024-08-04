@@ -1,9 +1,10 @@
-Please visit [PurpleCat-next-rental](https://purplecat-next-rental.vercel.app/)
+Please visit [PurpleCat-rental](https://purplecat-next-rental.vercel.app/)
 
 ## Skills and Tools Used
 
 - **React:** Used for building the frontend of the website.
 - **Next.js:** Used for server-side rendering and routing.
+- **TypeScript:** Implemented for static type checking and enhancing code quality.
 - **MongoDB and Mongoose:** Used for database operations and data modeling.
 - **Tailwind CSS:** Used for rapidly styling the user interface with utility classes.
 - **Next-auth:** Used for authentication and user management.

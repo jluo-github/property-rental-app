@@ -3,6 +3,7 @@ import PropertyCard from "@/components/PropertyCard";
 
 import User from "@/models/User";
 import type { IProperty } from "@/models/Property";
+import { redirect } from "next/navigation";
 const { getAuthUser } = await import("@/app/actions/addProperty");
 
 const SavedPropertiesPage = async () => {
@@ -10,6 +11,9 @@ const SavedPropertiesPage = async () => {
   // get session user
   const sessionUser = await getAuthUser();
   const userId = sessionUser?.id;
+  if (!userId) {
+    redirect("/");
+  }
 
   // get user bookmarks
   const { bookmarks } = await User.findById(userId).populate("bookmarks");
@@ -18,7 +22,7 @@ const SavedPropertiesPage = async () => {
   return (
     <section className='px-4 py-6'>
       <div className='container-xl lg:container m-auto px-4 py-6'>
-      <h1 className='text-2xl mb-12'>Saved properties</h1>
+        <h1 className='text-2xl mb-12'>Saved properties</h1>
         {bookmarks.length === 0 && <p>No saved properties</p>}
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
           {bookmarks.map((property: IProperty) => (

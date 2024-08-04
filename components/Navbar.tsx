@@ -6,10 +6,9 @@ import profile from "@/assets/images/profile.png";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useOutsideClick } from "./useOutsideClick";
 import UnreadMessageCount from "./UnreadMessage";
-
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -65,7 +64,7 @@ const Navbar = () => {
             <Link className='flex flex-shrink-0 items-center' href='/'>
               <Image src={logo} className='h-10 w-auto' alt='PurpleCatRental' />
 
-              <span className='hidden md:block text-white text-2xl font-bold ml-2'>
+              <span className='hidden md:block text-white text-lg font-bold ml-2 '>
                 PurpleCat Rental
               </span>
             </Link>
@@ -140,7 +139,6 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-
 
                 {/* unread count  */}
                 <UnreadMessageCount session={session} />

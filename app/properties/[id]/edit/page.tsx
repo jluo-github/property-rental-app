@@ -1,24 +1,27 @@
+import { getAuthUser } from "@/app/actions/addProperty";
 import PropertyEditForm from "@/components/PropertyEditForm";
 import connectDB from "@/config/database";
 import Property, { type IProperty } from "@/models/Property";
 import { convertToObject } from "@/utils/convertJson";
+import { redirect } from "next/navigation";
 
 const PropertyEditPage = async ({ params }: { params: { id: string } }) => {
   let property: IProperty | null = null;
-  try {
-    const { id } = params;
-    await connectDB();
 
-    // get property by id
-    const propertyDoc: IProperty | null = await Property.findById(id).lean();
-
-    if (!propertyDoc) {
-      return;
-    }
-    property = convertToObject(propertyDoc);
-  } catch (error) {
-    console.log("error: ", error);
+  const { id } = params;
+  await connectDB();
+  const sessionUser = await getAuthUser();
+  const userId = sessionUser?.id;
+  if (!userId) {
+    redirect("/");
   }
+
+  // get property by id
+  const propertyDoc: IProperty | null = await Property.findById(id).lean();
+  if (!propertyDoc) {
+    return;
+  }
+  property = convertToObject(propertyDoc);
 
   return (
     <section className='bg-violet-100'>
