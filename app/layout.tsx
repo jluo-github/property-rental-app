@@ -15,8 +15,8 @@ import { GlobalProvider } from "@/context/GlobalContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PurpleCat-Next-Rental",
-  description: "PurpleCat-Next-Rental",
+  title: "PurpleCat-Rental",
+  description: "PurpleCat-Rental",
   keywords: "PurpleCat, Rental",
 };
 
@@ -26,25 +26,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  // console.log("server session", session);
 
   return (
-    <GlobalProvider>
-      <html lang='en'>
-        <body className='flex flex-col min-h-screen bg-violet-100'>
-          <AuthProvider session={session}>
+    <html lang='en'>
+      <body className='flex flex-col bg-violet-100 min-h-screen'>
+        <AuthProvider session={session}>
+          <GlobalProvider>
             <Navbar />
             <main>{children}</main>
             <Footer />
             <ToastContainer
               position='bottom-right'
               limit={2}
-              autoClose={1000}
+              autoClose={2000}
               newestOnTop
             />
-          </AuthProvider>
-        </body>
-      </html>
-    </GlobalProvider>
+          </GlobalProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }

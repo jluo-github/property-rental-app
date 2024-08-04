@@ -1,17 +1,39 @@
-import Properties from "@/components/Properties";
 import PropertyCard from "@/components/PropertyCard";
 import PropertySearchForm from "@/components/PropertySearchForm";
+import Pagination from "@/components/Pagination";
+import connectDB from "@/config/database";
 import type { IProperty } from "@/models/Property";
-import { fetchProperties } from "@/utils/requests";
+import Property from "@/models/Property";
 
-const PropertiesPage = async () => {
-  const properties: IProperty[] = await fetchProperties();
+type Props = {
+  searchParams: {
+    page: number;
+    pageSize: number;
+  };
+};
 
-  // if (properties.length > 0) {
-  //   properties.sort((a, b) =>
-  //     new Date(a.createdAt) > new Date(b.createdAt) ? 1 : -1
-  //   );
-  // }
+const PropertiesPage = async ({ searchParams }: Props) => {
+  // console.log(searchParams);
+  // get page and pageSize from searchParams
+  const { page = 1, pageSize = 9 } = searchParams;
+
+  await connectDB();
+  // skip
+  const skip: number = (page - 1) * pageSize;
+  // total properties
+  const total: number = await Property.countDocuments({});
+
+  // mongoose query to get properties with pagination
+  const properties: IProperty[] | null = await Property.find({})
+    .skip(skip)
+    .limit(pageSize);
+
+  if (!properties)
+    return (
+      <h1 className='text-center text-2xl font-bold mt-10'>
+        No properties found
+      </h1>
+    );
 
   return (
     <>
@@ -22,18 +44,23 @@ const PropertiesPage = async () => {
       </section>
 
       {/* Properties */}
-      <Properties />
-      {/* <section className='bg-violet-50 px-4 pt-6 pb-10'>
-        <div className='container-xl lg:container m-auto'>
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {properties.map((property) => (
-              <div key={property._id}>
-                <PropertyCard property={property} />
-              </div>
-            ))}
-          </div>
+      <section className='px-4 py-6 my-12'>
+        <div className='container-xl lg:container m-auto px-4 py-12 '>
+          {properties && properties.length === 0 ? (
+            <p>No properties found.</p>
+          ) : (
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+              {properties &&
+                properties.map((property) => (
+                  <PropertyCard key={property._id} property={property} />
+                ))}
+            </div>
+          )}
+          {/* pagination */}
+
+          <Pagination page={+page} pageSize={+pageSize} totalItems={total} />
         </div>
-      </section> */}
+      </section>
     </>
   );
 };

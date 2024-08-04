@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Gallery, Item } from "react-photoswipe-gallery";
 
@@ -11,15 +13,15 @@ const PropertyImages = ({ images }: { images: string[] }) => {
             <Item
               original={images[0]}
               thumbnail={images[0]}
-              width='1024'
-              height='1024'>
+              width='1000'
+              height='600'>
               {({ ref, open }) => (
                 <Image
                   ref={ref}
                   onClick={open}
                   src={images[0]}
                   alt='image'
-                  className='object-cover h-[400px] mx-auto rounded-xl'
+                  className='object-cover h-[400px] mx-auto rounded-xl cursor-pointer'
                   width={0}
                   height={0}
                   sizes='100vw'
@@ -33,25 +35,23 @@ const PropertyImages = ({ images }: { images: string[] }) => {
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className={`
-                  ${
+                  className={`${
                     images.length === 3 && index === 2
                       ? "col-span-2"
                       : "col-span-1"
-                  }
-                `}>
+                  }`}>
                   <Item
                     original={image}
                     thumbnail={image}
-                    width='1024'
-                    height='1024'>
+                    width='1000'
+                    height='600'>
                     {({ ref, open }) => (
                       <Image
                         ref={ref}
                         onClick={open}
                         src={image}
                         alt='image'
-                        className='object-cover h-[400px] w-full rounded-xl'
+                        className='object-cover h-[400px] w-full rounded-xl cursor-pointer'
                         width={0}
                         height={0}
                         sizes='100vw'

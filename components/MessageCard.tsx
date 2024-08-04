@@ -1,73 +1,42 @@
 "use client";
-import { useState, useEffect } from "react";
 
-import Link from "next/link";
-import { toast } from "react-toastify";
-import { useGlobalContext } from "@/context/GlobalContext";
 import type { IMessage } from "@/models/Message";
+import Link from "next/link";
+import { markMessage } from "@/app/actions/markMessage";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { deleteMessage } from "@/app/actions/deleteMessage";
+import { useGlobalContext } from "@/context/GlobalContext";
 
-const Message = ({ message }: { message: IMessage }) => {
-  const [isRead, setIsRead] = useState(message.read);
-  const [isDeleted, setIsDeleted] = useState(false);
+const MessageCard = ({ message }: { message: IMessage }) => {
+  const [isRead, setIsRead] = useState<boolean>(message.read || false);
   const { setUnreadCount } = useGlobalContext();
 
-  const handleReadClick = async () => {
-    try {
-      const res = await fetch(`/api/messages/${message._id}`, {
-        method: "PUT",
-      });
-
-      if (res.status === 200) {
-        const { read } = await res.json();
-        setIsRead(read);
-
-        setUnreadCount((prevCount: number) =>
-          read ? prevCount - 1 : prevCount + 1
-        );
-        if (read) {
-          toast.success("Marked as read");
-        } else {
-          toast.success("Marked as new");
-        }
-      }
-    } catch (error) {
-      // console.log(error);
-      toast.error((error as Error).message);
-    }
+  const handleClick = async () => {
+    const read = await markMessage(message._id);
+    setIsRead(read);
+    // update unread count
+    setUnreadCount((prev: number) => (read ? prev - 1 : prev + 1));
+    toast.success(read ? `Marked as read` : "Mark as new");
   };
 
   const handleDelete = async () => {
-    try {
-      const res = await fetch(`/api/messages/${message._id}`, {
-        method: "DELETE",
-      });
-
-      if (res.status === 200) {
-        setIsDeleted(true);
-
-        setUnreadCount((prevCount: number) => prevCount - 1);
-        toast.success("Message Deleted");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error((error as Error).message);
-    }
+    await deleteMessage(message._id);
+    // update unread count
+    setUnreadCount((prev: number) => (isRead ? prev : prev - 1));
+    toast.success("Message deleted");
   };
-
-  if (isDeleted) {
-    return null;
-  }
 
   return (
     <div className='relative  bg-violet-50  p-4 rounded-md shadow-2xl border border-gray-200'>
       {!isRead && (
-        <div className='absolute top-2 right-2 bg-purple-300 text-gray-700 px-2 py-1 rounded-md'>
+        <div className='absolute top-2 right-2 bg-violet-500 text-white px-2 py-1 rounded-md'>
           New
         </div>
       )}
       <h2 className='text-xl mb-4'>
         <span className='font-bold'>Property Inquiry: </span>
-        {message.property.name }
+        {message.property.name}
       </h2>
       <p className='text-gray-700'>{message.body}</p>
 
@@ -94,16 +63,16 @@ const Message = ({ message }: { message: IMessage }) => {
           {new Date(message.createdAt).toLocaleString()}
         </li>
       </ul>
-      {/* button */}
+      {/*read button */}
       <button
-        onClick={handleReadClick}
+        onClick={handleClick}
         className={` mt-4 mr-3  ${
           isRead ? " bg-violet-300 " : "bg-violet-500 text-white "
         }    py-1 px-3 rounded-md `}>
-        {" "}
         {isRead ? "Mark as New" : "Mark as Read"}
       </button>
 
+      {/* delete button */}
       <button
         onClick={handleDelete}
         className='mt-4 bg-fuchsia-400 hover:bg-fuchsia-500 text-white  py-1 px-3 rounded-md'>
@@ -112,4 +81,4 @@ const Message = ({ message }: { message: IMessage }) => {
     </div>
   );
 };
-export default Message;
+export default MessageCard;

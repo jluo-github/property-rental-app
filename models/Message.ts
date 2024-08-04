@@ -1,12 +1,10 @@
-import { Schema, model, models } from "mongoose";
-import type { IProperty } from "./Property";
-import type { IUser } from "./User";
+import { Schema, model, models, Document, Types } from "mongoose";
 
-export interface IMessage {
+export interface IMessage extends Document {
   _id: string;
-  sender: IUser;
-  recipient: IUser;
-  property: IProperty;
+  sender: { _id: string; username: string };
+  recipient: Types.ObjectId;
+  property: { _id: string; name: string };
   name: string;
   email: string;
   phone?: string;
@@ -21,15 +19,21 @@ const MessageSchema = new Schema<IMessage>(
     sender: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
+
     recipient: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
+
     property: {
       type: Schema.Types.ObjectId,
       ref: "Property",
+      required: true,
     },
+
     name: {
       type: String,
       required: [true, "Please enter your name"],

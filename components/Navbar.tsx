@@ -10,6 +10,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useOutsideClick } from "./useOutsideClick";
 import UnreadMessageCount from "./UnreadMessage";
 
+
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -20,19 +21,13 @@ const Navbar = () => {
   const pathname = usePathname();
 
   // close the profile menu when clicked outside
-  const ref = useOutsideClick(() => {
-    setProfileMenuOpen(false);
-  });
+  // const ref = useOutsideClick(() => {
+  //   setProfileMenuOpen(false);
+  // });
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768 && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [mobileMenuOpen]);
+    window.addEventListener("resize", () => setMobileMenuOpen(false));
+  }, []);
 
   return (
     <nav className='bg-violet-700 border-b border-violet-500'>
@@ -145,10 +140,7 @@ const Navbar = () => {
                     />
                   </svg>
                 </button>
-                {/* Replace with the actual number of notifications  */}
-                {/* <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-fuchsia-500 rounded-full'>
-                  10
-                </span> */}
+
 
                 {/* unread count  */}
                 <UnreadMessageCount session={session} />
@@ -188,7 +180,6 @@ const Navbar = () => {
                 {/* Profile dropdown  */}
                 {profileMenuOpen && (
                   <div
-                    ref={ref}
                     id='user-menu'
                     className=' absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-violet-900 ring-opacity-5 focus:outline-none'
                     role='menu'
@@ -196,6 +187,7 @@ const Navbar = () => {
                     aria-labelledby='user-menu-button'
                     tabIndex={-1}>
                     <Link
+                      onClick={() => setProfileMenuOpen(false)}
                       href='/profile'
                       className='block px-4 py-2 text-sm text-violet-700'
                       role='menuitem'
@@ -204,6 +196,7 @@ const Navbar = () => {
                       Your Profile
                     </Link>
                     <Link
+                      onClick={() => setProfileMenuOpen(false)}
                       href='/properties/saved'
                       className='block px-4 py-2 text-sm text-violet-700'
                       role='menuitem'

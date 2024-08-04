@@ -1,14 +1,16 @@
 import PropertyCard from "@/components/PropertyCard";
-import { fetchProperties } from "@/utils/requests";
 import Link from "next/link";
 import type { IProperty } from "@/models/Property";
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
 
 const HomeProperties = async () => {
-  const { properties }: { properties: IProperty[] } = await fetchProperties();
+  await connectDB();
 
-  const recentProperties = properties
-    // .sort(() => Math.random() - Math.random())
-    .slice(0, 3);
+  const recentProperties: IProperty[] = await Property.find({})
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .lean();
 
   return (
     <>
@@ -22,7 +24,7 @@ const HomeProperties = async () => {
             {recentProperties.length === 0 ? (
               <p>No properties found.</p>
             ) : (
-              recentProperties.map((property: IProperty) => (
+              recentProperties.map((property) => (
                 <PropertyCard key={property._id} property={property} />
               ))
             )}

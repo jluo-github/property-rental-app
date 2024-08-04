@@ -6,11 +6,10 @@ const override = {
   margin: "100px auto",
 };
 
-const LoadingPage = ({ loading }: { loading: boolean }) => {
+const LoadingPage = () => {
   return (
     <ClipLoader
       color='#7c3aed'
-      loading={loading}
       cssOverride={override}
       size={150}
       aria-label='Loading'

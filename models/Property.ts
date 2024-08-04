@@ -17,9 +17,9 @@ export interface IProperty {
   square_feet: number;
   amenities: string[];
   rates: {
-    nightly: number;
-    weekly: number;
-    monthly: number;
+    nightly?: number;
+    weekly?: number;
+    monthly?: number;
   };
   seller_info: {
     name: string;
@@ -28,15 +28,14 @@ export interface IProperty {
   };
   images: string[];
   is_featured: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const PropertySchema = new Schema<IProperty>(
   {
     owner: {
       type: String,
-
       required: true,
     },
 

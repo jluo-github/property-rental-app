@@ -11,12 +11,13 @@ const PropertySearchForm = () => {
   // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
+    // show all if search is empty and property type is All
     if (location === "" && propertyType === "All") {
       router.push("/properties");
     } else {
+      // query string
       const query = `?location=${location}&propertyType=${propertyType}`;
-
+      // redirect to search results page
       router.push(`/properties/search-results${query}`);
     }
   };
@@ -29,6 +30,7 @@ const PropertySearchForm = () => {
         <label htmlFor='location' className='sr-only'>
           Location
         </label>
+        {/* search input */}
         <input
           type='text'
           id='location'
@@ -42,7 +44,7 @@ const PropertySearchForm = () => {
         <label htmlFor='property-type' className='sr-only'>
           Property Type
         </label>
-
+        {/* property type */}
         <select
           id='property-type'
           value={propertyType}
@@ -59,6 +61,7 @@ const PropertySearchForm = () => {
           <option value='Other'>Other</option>
         </select>
       </div>
+      {/* button */}
       <button
         type='submit'
         className='md:ml-4 mt-4 md:mt-0 w-full md:w-auto px-6 py-3 rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-500'>

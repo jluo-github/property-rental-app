@@ -1,60 +1,30 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import connectDB from "@/config/database";
 import PropertyCard from "@/components/PropertyCard";
-import Spinner from "@/components/Spinner";
-import { toast } from "react-toastify";
+
+import User from "@/models/User";
 import type { IProperty } from "@/models/Property";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+const { getAuthUser } = await import("@/app/actions/addProperty");
 
-const SavedPropertiesPage = () => {
-  const [properties, setProperties] = useState<IProperty[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
-  const router = useRouter();
+const SavedPropertiesPage = async () => {
+  await connectDB();
+  // get session user
+  const sessionUser = await getAuthUser();
+  const userId = sessionUser?.id;
 
-  useEffect(() => {
-    if (!session) {
-      router.push("/");
-      return;
-    }
-    const fetchSavedProperties = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/bookmarks");
+  // get user bookmarks
+  const { bookmarks } = await User.findById(userId).populate("bookmarks");
+  // console.log("bookmarks: ", bookmarks);
 
-        if (!res.ok) {
-          toast.error("Failed to fetch saved properties.");
-          return;
-        }
-        const data = await res.json();
-        setProperties(data);
-      } catch (error) {
-        toast.error((error as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSavedProperties();
-  }, [session]);
-
-  return loading ? (
-    <Spinner loading={loading} />
-  ) : (
+  return (
     <section className='px-4 py-6'>
-      <h1 className='text-2xl mb-4'>Saved properties</h1>
       <div className='container-xl lg:container m-auto px-4 py-6'>
-        {properties.length === 0 ? (
-          <p>No properties found.</p>
-        ) : (
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-            {properties.map((property) => (
-              <PropertyCard key={property._id} property={property} />
-            ))}
-          </div>
-        )}
+      <h1 className='text-2xl mb-12'>Saved properties</h1>
+        {bookmarks.length === 0 && <p>No saved properties</p>}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+          {bookmarks.map((property: IProperty) => (
+            <PropertyCard property={property} key={property._id} />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,12 +1,11 @@
 import { Schema, model, models, Document } from "mongoose";
-import type { IProperty } from "./Property";
 
 export interface IUser extends Document {
   _id: string;
   email: string;
   username: string;
   image?: string;
-  bookmarks?: IProperty[];
+  bookmarks?: string[];
   createdAt: Date;
   updatedAt: Date;
 }

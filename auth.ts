@@ -1,5 +1,3 @@
-// import NextAuth from "next-auth";
-
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
 
@@ -41,15 +39,18 @@ export const authOptions = {
           console.error(error);
         }
       }
+      // return true to allow sign in
       return true;
     },
 
     async session({ session }) {
+      // find the user in the database
       const user = await User.findOne({ email: session.user.email });
+      // if the user is found, attach the user id to the session
       if (user) {
         session.user.id = user._id.toString();
       }
-
+      // return the session
       return session;
     },
   },

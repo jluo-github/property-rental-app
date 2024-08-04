@@ -17,6 +17,6 @@ const Hero = () => {
         <PropertySearchForm />
       </div>
     </section>
-  );
+  ); 
 };
 export default Hero;

@@ -35,7 +35,7 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
               {property.rates.nightly ? (
                 ` $${property.rates.nightly.toLocaleString()}`
               ) : (
-                <FaTimes className=' text-red-700'></FaTimes>
+                <FaTimes className=' text-red-700' />
               )}
             </div>
           </div>
@@ -46,7 +46,7 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
               {property.rates.weekly ? (
                 `$${property.rates.weekly.toLocaleString()}`
               ) : (
-                <FaTimes className=' text-red-700'></FaTimes>
+                <FaTimes className=' text-red-700' />
               )}
             </div>
           </div>
@@ -57,7 +57,7 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
               {property.rates.monthly ? (
                 `$${property.rates.monthly.toLocaleString()}`
               ) : (
-                <FaTimes className=' text-red-700'></FaTimes>
+                <FaTimes className=' text-red-700' />
               )}
             </div>
           </div>
@@ -68,15 +68,15 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
         <h3 className='text-lg font-bold mb-6'>Description & Details</h3>
         <div className='flex justify-center gap-4 text-violet-500 mb-4 text-xl space-x-9'>
           <p>
-            <FaBed className='inline-block mr-1'></FaBed> {property.beds}
+            <FaBed className='inline-block mr-1' /> {property.beds}
             <span className='hidden sm:inline'> Beds</span>
           </p>
           <p>
-            <FaBath className='inline-block mr-1'></FaBath> {property.baths}
+            <FaBath className='inline-block mr-1' /> {property.baths}
             <span className='hidden sm:inline'> Baths</span>
           </p>
           <p>
-            <FaRulerCombined className='inline-block mr-1'></FaRulerCombined>
+            <FaRulerCombined className='inline-block mr-1' />
             {property.square_feet}{" "}
             <span className='hidden sm:inline'> sqft</span>
           </p>
@@ -88,19 +88,18 @@ const PropertyDetails = ({ property }: { property: IProperty }) => {
         <h3 className='text-lg font-bold mb-6'>Amenities</h3>
 
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 list-none space-y-1'>
-          {property.amenities.map((amenity, item) => (
-            <li key={item}>
+          {property.amenities.map((amenity, index) => (
+            <li key={index}>
               <FaCheck className='text-green-600 mr-1 inline-block' /> {amenity}
             </li>
           ))}
         </ul>
       </div>
 
-      {/* //todo: add map */}
       {/* map: */}
-      <div className='bg-violet-50  p-6 rounded-lg shadow-2xl mt-6'>
+      {/* <div className='bg-violet-50  p-6 rounded-lg shadow-2xl mt-6'>
         <div id='map'></div>
-      </div>
+      </div> */}
     </main>
   );
 };

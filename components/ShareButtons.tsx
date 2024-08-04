@@ -1,9 +1,13 @@
+"use client";
+
 import type { IProperty } from "@/models/Property";
 import {
+  LinkedinShareButton,
   FacebookShareButton,
   RedditShareButton,
   TwitterShareButton,
   EmailShareButton,
+  LinkedinIcon,
   FacebookIcon,
   RedditIcon,
   TwitterIcon,
@@ -19,10 +23,11 @@ const ShareButtons = ({ property }: { property: IProperty }) => {
         Share This Property:
       </h3>
       <div className='flex gap-3 justify-center pb-5'>
-        <FacebookShareButton
-          url={shareUrl}
-          title={property.name}
-          hashtag={`#${property.type.replace(/\s/g, "")}ForRent`}>
+        <LinkedinShareButton url={shareUrl} title={property.name}>
+          <LinkedinIcon size={40} round={true} />
+        </LinkedinShareButton>
+
+        <FacebookShareButton url={shareUrl} title={property.name}>
           <FacebookIcon size={40} round={true} />
         </FacebookShareButton>
 
@@ -30,17 +35,11 @@ const ShareButtons = ({ property }: { property: IProperty }) => {
           <RedditIcon size={40} round={true} />
         </RedditShareButton>
 
-        <TwitterShareButton
-          url={shareUrl}
-          title={property.name}
-          hashtags={[`${property.type.replace(/\s/g, "")}ForRent`]}>
+        <TwitterShareButton url={shareUrl} title={property.name}>
           <TwitterIcon size={40} round={true} />
         </TwitterShareButton>
 
-        <EmailShareButton
-          url={shareUrl}
-          subject={property.name}
-          body={`Check out this property listing: ${shareUrl}`}>
+        <EmailShareButton url={shareUrl} subject={property.name}>
           <EmailIcon size={40} round={true} />
         </EmailShareButton>
       </div>

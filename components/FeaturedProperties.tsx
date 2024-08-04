@@ -1,10 +1,16 @@
-import Image from "next/image";
-import { fetchProperties } from "@/utils/requests";
 import FeaturedPropertyCard from "./FeaturedPropertyCard";
 import type { IProperty } from "@/models/Property";
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
 
 const FeaturedProperties = async () => {
-  const properties: IProperty[] = await fetchProperties({ isFeatured: true });
+  await connectDB();
+  // fetch featured properties
+  const properties: IProperty[] = await Property.find({
+    isFeatured: true,
+  })
+    .limit(4)
+    .lean();
 
   return (
     properties.length > 0 && (
