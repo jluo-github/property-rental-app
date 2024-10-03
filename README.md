@@ -1,4 +1,4 @@
-Please visit [PurpleCat-rental](https://purplecat-next-rental.vercel.app/)
+Please visit [Property-rental-app](https://purplecat-next-rental.vercel.app/)
 
 ## Skills and Tools Used
 
@@ -9,7 +9,6 @@ Please visit [PurpleCat-rental](https://purplecat-next-rental.vercel.app/)
 - **Tailwind CSS:** Used for rapidly styling the user interface with utility classes.
 - **Next-auth:** Used for authentication and user management.
 - **Cloudinary:** Used for image and media storage.
-- **React-share:** Used for adding social media sharing buttons.
 - **React-photoswipe-gallery:** Used for displaying image galleries with zoom functionality.
 
 ### react-icons
