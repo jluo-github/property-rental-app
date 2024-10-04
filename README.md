@@ -1,5 +1,5 @@
-Please visit [Property-rental-app](https://purplecat-next-rental.vercel.app/)
-
+Please visit [Property-rental-app](https://purplecat-property-rental.vercel.app) for more details.
+ 
 ## Skills and Tools Used
 
 - **React:** Used for building the frontend of the website.
