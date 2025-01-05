@@ -1,5 +1,5 @@
 Please visit [Property-rental-app](https://purplecat-property-rental.vercel.app) for more details.
- 
+
 ## Skills and Tools Used
 
 - **React:** Used for building the frontend of the website.
@@ -9,7 +9,8 @@ Please visit [Property-rental-app](https://purplecat-property-rental.vercel.app)
 - **Tailwind CSS:** Used for rapidly styling the user interface with utility classes.
 - **Next-auth:** Used for authentication and user management.
 - **Cloudinary:** Used for image and media storage.
-- **React-photoswipe-gallery:** Used for displaying image galleries with zoom functionality.
+- **Jest:** Utilized for unit testing.
+- **GitHub Actions:** Utilized for automating CI/CD workflows.
 
 ### react-icons
 
@@ -71,5 +72,16 @@ import 'photoswipe/dist/photoswipe.css'
 
 ```
 npm i react-share
+
+```
+
+### jest
+
+```
+ npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/dom @testing-library/jest-dom ts-node @testing-library/user-event ts-jest @types/jest jest-fixed-jsdom
+
+npm init jest@latest
+
+npm i -D msw whatwg-fetch
 
 ```
